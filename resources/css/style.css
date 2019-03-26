@@ -13,11 +13,11 @@ body {
 }
 
 header {
-    background-color: darkgoldenrod;
+    background-color: goldenrod;
     width: 100%
 }
 
 footer {
-    background-color: darkgoldenrod;
+    background-color: goldenrod;
     width: 100%;
 }
