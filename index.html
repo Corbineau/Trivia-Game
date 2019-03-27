@@ -1,29 +1,45 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>Trivia</title>
-    <link href="./resources/css/reset.css" type="text/css" rel="stylesheet">  
+    <link href="./resources/css/reset.css" type="text/css" rel="stylesheet">
     <link href="./resources/css/style.css" type="text/css" rel="stylesheet">
-  </head>
-  <body>
+</head>
+
+<body>
     <header>
 
     </header>
-      <div class="wrapper">
-          <div id="image">
+    <div class="wrapper">
+        <div id="image">
 
-          </div>
-          <div id="question">
-            <span class="answer" id="rightAnswer">
+        </div>
+        <div id="questions">
+            <div class="" id="question">
 
-            </span>
-            <span class="answer" id="wrongAnswer">
-                
-                </span>
-          </div>
-      </div>
+            </div>
+            <div class="answers" id="answer">
+                <p class="answer" id="unanswered">
+                    <input type="radio" id="aButton" /><span class="option" id="aText"></span>
+                    <input type="radio" id="bButton" /><span class="option" id="bText"></span>
+                    <input type="radio" id="cButton" /><span class="option" id="cText"></span>
+                    <input type="radio" id="dButton" /><span class="option" id="dText"></span>
+                </p>
+                <p class="modal answer" id="rightAnswer">
+
+                </p>
+                <p class="modal answer" id="wrongAnswer">
+
+                </p>
+            </div>
+        </div>
+    </div>
     <footer>
 
     </footer>
-  </body>
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</body>
+
 </html>
