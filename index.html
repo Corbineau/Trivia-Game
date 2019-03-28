@@ -5,22 +5,24 @@
     <title>Trivia</title>
     <link href="./resources/css/reset.css" type="text/css" rel="stylesheet">
     <link href="./resources/css/style.css" type="text/css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Chicle|Nanum+Gothic+Coding:400,700" rel="stylesheet">
 </head>
 
-<body>
-    <header>
-
+<body class="column"> 
+    <header class="center">
+        <h1>Meta Trivia</h1>
     </header>
-    <div class="wrapper">
+    <div class="wrapper center column">
         <div id="image">
 
         </div>
+        <div id="clock">00:00</div>
         <div id="questions">
             <div class="" id="question">
 
             </div>
             <div class="answers" id="answer">
-                <p class="answer" id="unanswered">
+                <p class="answer column" id="unanswered">
                     <input type="radio" id="aButton" /><span class="option" id="aText"></span>
                     <input type="radio" id="bButton" /><span class="option" id="bText"></span>
                     <input type="radio" id="cButton" /><span class="option" id="cText"></span>
@@ -34,6 +36,8 @@
                 </p>
             </div>
         </div>
+        <p class="modal endGame" id="youWin"></p>
+        <p class="modal endGame" id="youLose"></p>
     </div>
     <footer>
 
