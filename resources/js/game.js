@@ -1,7 +1,7 @@
 let triviaQs = [];
 const questions = [
     {
-        q: "In Latin eduction, The <i>Trivia<i> are the three foundational liberal arts:",   
+        q: "In Latin eduction, The <i>Trivia<i> are the three foundational liberal arts:",
         a: "reading, writing, and arithmetic",
         b: "history, literature, and philosophy",
         c: "grammar, logic, and rhetoric",
@@ -43,29 +43,29 @@ const questions = [
     },
     {
         q: "Fred L Worth, author of the Trivia Encyclopedia, deliberately placed misinformation in his books to catch anyone who attempted to violate his copyright. One of these incorrect answers was used in the original Trivial Pursuit board game, 'what was Columbo's first name?' The wrong answer was ______; Columbo's first name was actually _______",
-        a: "George, Columbo", 
-        b: "Frank, nonexistant", 
-        c: "Frances, Lieutenant", 
-        d: "Philip, Frank (never actually stated)", 
+        a: "George, Columbo",
+        b: "Frank, nonexistant",
+        c: "Frances, Lieutenant",
+        d: "Philip, Frank (never actually stated)",
         answer: "d",
         rightA: "src='../images/correct.jpg'",
         wrongA: "src'../images/incorrect.jpg'"
     },
     {
-        q: "Fred L Worth sued <i>Trivial Pursuit</i> for 300 Million dollars for copyright infringment. Trivial Pursuit successfully defeated the suit, arguing that:", 
-        a: "Fred L. Worth actually plagarized someone else.", 
-        b: "You can't copyright facts.", 
-        c: "The Copyright Trap is an invalid tactic, like entrapment.", 
-        d: "A Board Game is protected under Fair Use laws.", 
+        q: "Fred L Worth sued <i>Trivial Pursuit</i> for 300 Million dollars for copyright infringment. Trivial Pursuit successfully defeated the suit, arguing that:",
+        a: "Fred L. Worth actually plagarized someone else.",
+        b: "You can't copyright facts.",
+        c: "The Copyright Trap is an invalid tactic, like entrapment.",
+        d: "A Board Game is protected under Fair Use laws.",
         answer: "b",
         rightA: "src='../images/correct.jpg'",
         wrongA: "src'../images/incorrect.jpg'"
     },
     {
-        q: "A contemporary slang synonym for trivial is:", 
-        a: "bougie", 
-        b: "ridic", 
-        c: "banjie", 
+        q: "A contemporary slang synonym for trivial is:",
+        a: "bougie",
+        b: "ridic",
+        c: "banjie",
         d: "triflin'",
         answer: "d",
         rightA: "src='../images/correct.jpg'",
@@ -79,7 +79,7 @@ const questions = [
         d: "The Portland Press Herald",
         Answer: "a",
         rightA: "src='../images/correct.jpg'",
-        wrongA: "src'../images/incorrect.jpg'" 
+        wrongA: "src'../images/incorrect.jpg'"
     },
     {
         q: "The two longest ongoing trivia contests in the world are the Great Midwest Trivia Contest at Lawrence University and the Williams Trivia Contest, both of which started in the spring of which year?",
@@ -100,7 +100,7 @@ const questions = [
         Answer: "b",
         rightA: "src='../images/correct.jpg'",
         wrongA: "src'../images/incorrect.jpg'"
-        
+
     }
 ]
 
@@ -115,113 +115,123 @@ function Question({ q, a, b, c, d, answer }, rightA, wrongA) {
     this.rightA = rightA;
     this.wrongA = wrongA;
 }
-questions.forEach(function(question) {
+questions.forEach(function (question) {
     const triviaQuestion = new Question(question);
     triviaQs.push(triviaQuestion);
 });
 
 console.log(triviaQs);
 
-//set up the timing function
 
 
 //game Object
 
 var triviaGame = {
-gameOn: false,
-isThinking: false,
-thinkTimer: setTimeout(this.checkAnswer, 15000),
-moveAlong: setTimeout(this.nextQuestion, 5000),
-setInterval: (this.count, 1000),
-count: 15,
-numRight: 0,
-numWrong: 0,
-selectedAnswer: "",
-currentQuestion: "",
+    gameOn: false,
+    isThinking: false,
+    //thinkTimer: setTimeout(this.checkAnswer, 15000),
+    intervalId: "",
+    count: 15,
+    numRight: 0,
+    numWrong: 0,
+    selectedAnswer: "",
+    currentQuestion: "",
 
-//On load, show entry modal, after 3 seconds, load first question 
-gameStart: function() {
-    
-    this.gameOn = true;
-    console.log(this.gameOn);
-    console.log(this);
-    this.questionLoop();
+    //On load, show entry modal, after 3 seconds, load first question 
+    gameStart: function() {
 
-},
-// Iterate through questions array while gameOn is true. 
+        this.gameOn = true;
+        console.log(this.gameOn);
+        console.log(this);
+        this.questionLoop();
 
-questionLoop: function() {
-    this.isThinking = true;
-    this.setInterval;
-    this.thinkTimer;
-    this.count--;
-    //show countdown clock (15 second timer)
-    for (let i = 0; i <= triviaQs.length; i++) {
-        //map each of the parameters in the question object to the page,
-        let currentQuestion = triviaQs[i];
-        let {q, a, b, c, d, answer} = this.currentQuestion;
-        //it could be cool to redo this sometime where these are dynamically generated on the page in a random order, by giving them a data-attribute that randomly assigns the letter based on the radio button they're in. 
-        $("#question").text(q);
-        $("#aText").text(a);
-        $("#bText").text(b);
-        $("#cText").text(c);
-        $("#dText").text(d);
-        $(".radioBtn").on("click", function(){
-            triviaGame.selectedAnswer = $(this).attr("id");
-            triviaGame.checkAnswer();
-        })
+    },
+    // Iterate through questions 
+
+    questionLoop: function() {
         
-        //create submit button & attach click event(run checkAnswer)
-    }
-    //while isThinking is true? Maybe this isn't needed.
-    if (this.count === 0) {
-        this.checkAnswer();
-    }
-},
+        //show countdown clock (15 second timer)
+        for (let i = 0; i <= triviaQs.length; i++) {
+            this.isThinking = true;
+            this.intervalId = setInterval(this.countdown(), 1000);
+            //map each of the parameters in the question object to the page,
+            this.currentQuestion = triviaQs[i];
+            console.log(this.currentQuestion);
+            //let {q, a, b, c, d, answer, rightA, wrongA } = this.currentQuestion;
+            //it could be cool to redo this sometime where these are dynamically generated on the page in a random order, by giving them a data-attribute that randomly assigns the letter based on the radio button they're in. 
+            $("#question").text(this.currentQuestion.q);
+            $("#aText").text(this.currentQuestion.a);
+            $("#bText").text(this.currentQuestion.b);
+            $("#cText").text(this.currentQuestion.c);
+            $("#dText").text(this.currentQuestion.d);
+            $("#rightAnswer").html(`<img ${this.currentQuestion.rightA} />`);
+            $("#wrongAnswer").html(`<img ${this.currentQuestion.wrongA} />`);
+
+        }
+        //while isThinking is true? Maybe this isn't needed.
+        if (this.count === 0) {
+            this.isThinking = false;
+            this.checkAnswer();
+        }
+    },
+
+    countdown: function() {
+        this.count--;
+        $("#clock").text(`00:${this.count}`);
+    },
 
 
+    checkAnswer: function() {
+        clearInterval(this.intervalId);
+        //if submit is not clicked before the time is up, show time up modal, and automatically move to next question
+        this.isThinking = false;
+        if ((this.selectedAnswer === null) && (this.count === 0)) {
+            $("#timeUp").show;
+            this.count = 15;
+            this.questionLoop();
+            //if answer is selected and submit is clicked before the time is up, check for correctness, show correct/incorrect modal, and automatically move to the next question. 
+        } else if (currentQuestion.answer === selectedAnswer) {
+            $("#rightAnswer").show; 
+        } else if (currentQuestion.answer != selectedAnswer) {
+            $("wrongAnswer").show;
+        }
+        // if answer is not chosen and submit is clicked, nothing happens.
+    },
 
-checkAnswer: function() {
-    clearInterval(this.intervalId);
-    isThinking = false;
-    if((this.selectedAnswer === null) && (this.count === 0)) {
-        $("#timeUp").show;
-        this.count === 15;
-        nextQuestion();
-    } else if(currentQuestion.answer === selectedAnswer) {
-        $(currentQuestion.rightAnswer)
-    }
 
-    //if submit is not clicked before the time is up, show time up modal, and automatically move to next question
-//if answer is selected and submit is clicked before the time is up, check for correctness, show correct/incorrect modal, and automatically move to the next question. 
-// if answer is not chosen and submit is clicked, nothing happens.
-},
+    //once all of the questions have gone, display game-end modal, with number of answers right, number wrong, and something pithy based on how many they got.
 
+    //display button to play again on click, run initializer. 
+    gameInit: function() {
+        this.gameOn = false;
+        this.count = 15;
+        this.numRight = 0;
+        numWrong = 0;
 
-//once all of the questions have gone, display game-end modal, with number of answers right, number wrong, and something pithy based on how many they got.
-
-//display button to play again on click, run initializer. 
-gameInit: function() {
-    this.gameOn = false;
-    this.count = 15;
-    this.numRight = 0;
-    numWrong = 0;
-
-},
+    },
 }
 
 for (let key in triviaGame) {
     if (typeof triviaGame[key] == 'function') {
-      triviaGame[key] = triviaGame[key].bind(triviaGame);
+        triviaGame[key] = triviaGame[key].bind(triviaGame);
     }
-  }
+}
 
-$(document).ready( function() {
+$(document).ready(function () {
 
-setTimeout(triviaGame.gameStart, 3000);
-//triviaGame.loadTimer();
+    setTimeout(triviaGame.gameStart, 3000);
+    //triviaGame.loadTimer();
+    //if triviaGame.isThinking = true?
 
 
+    $(".radioBtn").on("click", function () {
+        triviaGame.selectedAnswer = $(this).attr("id");
+    })
+
+    $("#submitA").on("click", function (event) {
+        event.preventDefault();
+        triviaGame.checkAnswer();
+    })
 
 });
 
