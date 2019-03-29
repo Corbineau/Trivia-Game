@@ -28,8 +28,14 @@ h1 {
     width: 75%;
 }
 
-.option {
+.aBox {
     padding: .75rem;
+    margin: 1rem;
+}
+
+.answer {
+    width: 100%;
+    height: 100%;
 }
 
 /* structure ids */
