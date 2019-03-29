@@ -107,8 +107,9 @@ gameOn: false,
 isThinking: false,
 loadTimer: setTimeout(this.gameStart, 3000),
 thinkTimer: setTimeout(this.checkAnswer, 15000),
+moveAlong: setTimeout(this.)
 setInterval: (this.count, 1000),
-count: 0,
+count: 15,
 numRight: 0,
 numWrong: 0,
 
@@ -117,16 +118,28 @@ gameStart: function() {
     this.gameOn = true;
     this.questionLoop();
     console.log(this.gameOn);
+    
+
 
 },
 // Iterate through questions array while gameOn is true. (possibly do this randomly?)
 
 questionLoop: function() {
     this.isThinking = true;
+    this.setInterval;
+    this.thinkTimer;
     this.count--;
     //show countdown clock (15 second timer)
-    for (let i = 0; i <= trivia.length; i++) {
-        //map each of the parameters in the question object to the page, 
+    for (let i = 0; i <= triviaQs.length; i++) {
+        //map each of the parameters in the question object to the page,
+        let currentQuestion = triviaQs[i];
+        let {q, a, b, c, d, answer} = currentQuestion;
+        //it could be cool to redo this sometime where these are dynamically generated on the page in a random order, by giving them a data-attribute that randomly assigns the letter based on the radio button they're in. 
+        $("#question").text(q);
+        $("#aBtn").text(a);
+        $("#aBtn").text(b);
+        $("#aBtn").text(c);
+        $("#aBtn").text(d);
         //create submit button & attach click event(run checkAnswer)
     }
     //while isThinking is true? Maybe this isn't needed.
@@ -168,7 +181,7 @@ gameInit: function() {
 
 $(document).ready( function() {
 
-//triviaGame.loadTimer();
+triviaGame.loadTimer;
 
 });
 

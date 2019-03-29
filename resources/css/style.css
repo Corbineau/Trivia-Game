@@ -59,10 +59,13 @@ h1 {
 
 /* various modals */
 
+.modal {
+    display: none;
+}
 
 
 /* bottom of the page */
 
 footer {
-    
+    font-size: .75rem;
 }

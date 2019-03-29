@@ -17,17 +17,18 @@
 
         </div>
         <div id="clock">00:00</div>
-        <div id="questions">
-            <div class="" id="question">
+        <div id="playField">
+            <p class="questions" id="question">
 
-            </div>
+            </p>
             <div class="answers" id="answer">
-                <p class="answer column" id="unanswered">
-                    <input type="radio" id="aButton" /><span class="option" id="aText"></span>
-                    <input type="radio" id="bButton" /><span class="option" id="bText"></span>
-                    <input type="radio" id="cButton" /><span class="option" id="cText"></span>
-                    <input type="radio" id="dButton" /><span class="option" id="dText"></span>
-                </p>
+                <form class="answer column" id="unanswered">
+                    <input type="radio" name="possAnswer" class="radioBtn" id="a" /><span class="option" id="aText"></span>
+                    <input type="radio" name="possAnswer" class="radioBtn" id="b" /><span class="option" id="bText"></span>
+                    <input type="radio" name="possAnswer" class="radioBtn" id="c" /><span class="option" id="cText"></span>
+                    <input type="radio" name="possAnswer" class="radioBtn" id="d" /><span class="option" id="dText"></span>
+                    <button type="submit">Submit</button>
+                </form>
                 <p class="modal answer" id="rightAnswer">
 
                 </p>
