@@ -7,8 +7,8 @@ const questions = [
         c: "grammar, logic, and rhetoric",
         d: "blood, love, and rhetoric",
         answer: "c",
-        rightA: "src='../images/correct.jpg'",
-        wrongA: "src'../images/incorrect.jpg'"
+        rightA: "src='resources/images/correct.jpg",
+        wrongA: "src'resources/images/incorrect.jpg'"
     },
     {
         q: "The board game <i>Trivial Pursuit</i> was first released in:",
@@ -17,8 +17,8 @@ const questions = [
         c: "1979",
         d: "1984",
         answer: "a",
-        rightA: "src='../images/correct.jpg'",
-        wrongA: "src'../images/incorrect.jpg'"
+        rightA: "src='resources/images/correct.jpg",
+        wrongA: "src='resources/images/incorrect.jpg'"
 
     },
     {
@@ -28,8 +28,8 @@ const questions = [
         c: "public roads",
         d: "water of life",
         answer: "b",
-        rightA: "src='../images/correct.jpg'",
-        wrongA: "src'../images/incorrect.jpg'"
+        rightA: "src='resources/images/correct.jpg",
+        wrongA: "src'resources/images/incorrect.jpg'"
     },
     {
         q: "The word 'trivia' came to mean 'trite, unimportant, commonplace, banal' in the ____, largely due to the works of ________",
@@ -38,8 +38,8 @@ const questions = [
         c: "1600's, Shakespere",
         d: "1700's, Jonathan Swift",
         answer: "c",
-        rightA: "src='../images/correct.jpg'",
-        wrongA: "src'../images/incorrect.jpg'"
+        rightA: "src='resources/images/correct.jpg",
+        wrongA: "src'resources/images/incorrect.jpg'"
     },
     {
         q: "Fred L Worth, author of the Trivia Encyclopedia, deliberately placed misinformation in his books to catch anyone who attempted to violate his copyright. One of these incorrect answers was used in the original Trivial Pursuit board game, 'what was Columbo's first name?' The wrong answer was ______; Columbo's first name was actually _______",
@@ -48,8 +48,8 @@ const questions = [
         c: "Frances, Lieutenant",
         d: "Philip, Frank (never actually stated)",
         answer: "d",
-        rightA: "src='../images/correct.jpg'",
-        wrongA: "src'../images/incorrect.jpg'"
+        rightA: "src='resources/images/correct.jpg",
+        wrongA: "src'resources/images/incorrect.jpg'"
     },
     {
         q: "Fred L Worth sued <i>Trivial Pursuit</i> for 300 Million dollars for copyright infringment. Trivial Pursuit successfully defeated the suit, arguing that:",
@@ -58,8 +58,8 @@ const questions = [
         c: "The Copyright Trap is an invalid tactic, like entrapment.",
         d: "A Board Game is protected under Fair Use laws.",
         answer: "b",
-        rightA: "src='../images/correct.jpg'",
-        wrongA: "src'../images/incorrect.jpg'"
+        rightA: "src='resources/images/correct.jpg",
+        wrongA: "src'resources/images/incorrect.jpg'"
     },
     {
         q: "A contemporary slang synonym for trivial is:",
@@ -68,8 +68,8 @@ const questions = [
         c: "banjie",
         d: "triflin'",
         answer: "d",
-        rightA: "src='../images/correct.jpg'",
-        wrongA: "src'../images/incorrect.jpg'"
+        rightA: "src='resources/images/correct.jpg",
+        wrongA: "src'resources/images/incorrect.jpg'"
     },
     {
         q: "The first known labeling of trivia as a casual parlor game was in a February 5th, 1965 column published in which newspaper?",
@@ -78,8 +78,8 @@ const questions = [
         c: "The New York Times",
         d: "The Portland Press Herald",
         Answer: "a",
-        rightA: "src='../images/correct.jpg'",
-        wrongA: "src'../images/incorrect.jpg'"
+        rightA: "src='resources/images/correct.jpg",
+        wrongA: "src'resources/images/incorrect.jpg'"
     },
     {
         q: "The two longest ongoing trivia contests in the world are the Great Midwest Trivia Contest at Lawrence University and the Williams Trivia Contest, both of which started in the spring of which year?",
@@ -88,8 +88,8 @@ const questions = [
         c: "1979",
         d: "1966",
         answer: "d",
-        rightA: "src='../images/correct.jpg'",
-        wrongA: "src'../images/incorrect.jpg'"
+        rightA: "src='resources/images/correct.jpg",
+        wrongA: "src'resources/images/incorrect.jpg'"
     },
     {
         q: "Which televised trivia competition was the framing device for a popular 2008 movie set in Mumbai, India?",
@@ -98,14 +98,14 @@ const questions = [
         c: "The $100,000 Pyramid",
         d: "Bollywood Squares",
         Answer: "b",
-        rightA: "src='../images/correct.jpg'",
-        wrongA: "src'../images/incorrect.jpg'"
+        rightA: "src='resources/images/correct.jpg'",
+        wrongA: "src='resources/images/incorrect.jpg'"
 
     }
 ]
 
 
-function Question({ q, a, b, c, d, answer }, rightA, wrongA) {
+function Question({ q, a, b, c, d, answer, rightA, wrongA }) {
     this.q = q;
     this.a = a;
     this.b = b;
@@ -122,7 +122,7 @@ questions.forEach(function (question) {
 
 console.log(triviaQs);
 
-
+//Question.prototype.run
 
 //game Object
 
@@ -138,7 +138,7 @@ var triviaGame = {
     currentQuestion: "",
 
     //On load, show entry modal, after 3 seconds, load first question 
-    gameStart: function() {
+    gameStart: function () {
 
         this.gameOn = true;
         console.log(this.gameOn);
@@ -148,39 +148,55 @@ var triviaGame = {
     },
     // Iterate through questions 
 
-    questionLoop: function() {
-        
-        //show countdown clock (15 second timer)
-        for (let i = 0; i <= triviaQs.length; i++) {
-            this.isThinking = true;
-            this.intervalId = setInterval(this.countdown(), 1000);
-            //map each of the parameters in the question object to the page,
-            this.currentQuestion = triviaQs[i];
-            console.log(this.currentQuestion);
-            //let {q, a, b, c, d, answer, rightA, wrongA } = this.currentQuestion;
-            //it could be cool to redo this sometime where these are dynamically generated on the page in a random order, by giving them a data-attribute that randomly assigns the letter based on the radio button they're in. 
-            $("#question").text(this.currentQuestion.q);
-            $("#aText").text(this.currentQuestion.a);
-            $("#bText").text(this.currentQuestion.b);
-            $("#cText").text(this.currentQuestion.c);
-            $("#dText").text(this.currentQuestion.d);
-            $("#rightAnswer").html(`<img ${this.currentQuestion.rightA} />`);
-            $("#wrongAnswer").html(`<img ${this.currentQuestion.wrongA} />`);
+    questionLoop: async function () {
 
-        }
-        //while isThinking is true? Maybe this isn't needed.
-        if (this.count === 0) {
-            this.isThinking = false;
-            this.checkAnswer();
-        }
+        //for (let i = 0; i <= triviaQs.length; i++) {
+        const interval = 150000;
+        triviaQs.forEach(function (parent, index) {
+            
+            setTimeout(function loopy() {
+                loopy.bind(triviaGame);
+                console.log(this);
+                this.isThinking = true;
+                this.currentQuestion = triviaQs[index];
+                this.countdown();
+                console.log(this.currentQuestion);
+                $("#question").html(this.currentQuestion.q);
+                $("#aText").html(this.currentQuestion.a);
+                $("#bText").html(this.currentQuestion.b);
+                $("#cText").html(this.currentQuestion.c);
+                $("#dText").html(this.currentQuestion.d);
+                $("#rightAnswer").html(`<img ${this.currentQuestion.rightA} />`);
+                $("#wrongAnswer").html(`<img ${this.currentQuestion.wrongA} />`);
+                while(this.count > 0) {
+                    if($("input[name='possAnswer'").is(":checked")) {
+                        console.log("checked!");
+                        console.log(this);
+                        console.log($(this).attr("id"));
+                        triviaGame.selectedAnswer = $(this).attr("id");
+                        console.log(triviaGame.selectedAnswer);
+                    };
+                }
+                $.when(triviaGame.count === 0).then(triviaGame.checkAnswer());      
+                    
+                }, index * interval);
+        });
+
+        //this.intervalId = setInterval(this.countdown(), 1000);
+        //map each of the parameters in the question object to the page,
+
+        //let {q, a, b, c, d, answer, rightA, wrongA } = this.currentQuestion;
+        //it could be cool to redo this sometime where these are dynamically generated on the page in a random order, by giving them a data-attribute that randomly assigns the letter based on the radio button they're in. 
+
+
     },
+
+    //show countdown clock (15 second timer)
 
     countdown: function() {
         this.count--;
         $("#clock").text(`00:${this.count}`);
     },
-
-
     checkAnswer: function() {
         clearInterval(this.intervalId);
         //if submit is not clicked before the time is up, show time up modal, and automatically move to next question
@@ -188,28 +204,34 @@ var triviaGame = {
         if ((this.selectedAnswer === null) && (this.count === 0)) {
             $("#timeUp").show;
             this.count = 15;
-            this.questionLoop();
             //if answer is selected and submit is clicked before the time is up, check for correctness, show correct/incorrect modal, and automatically move to the next question. 
         } else if (currentQuestion.answer === selectedAnswer) {
-            $("#rightAnswer").show; 
+            $("#rightAnswer").show;
         } else if (currentQuestion.answer != selectedAnswer) {
             $("wrongAnswer").show;
         }
         // if answer is not chosen and submit is clicked, nothing happens.
     },
 
-
-    //once all of the questions have gone, display game-end modal, with number of answers right, number wrong, and something pithy based on how many they got.
-
-    //display button to play again on click, run initializer. 
     gameInit: function() {
         this.gameOn = false;
         this.count = 15;
         this.numRight = 0;
         numWrong = 0;
-
+    
     },
-}
+    }
+
+
+    
+
+
+
+
+//once all of the questions have gone, display game-end modal, with number of answers right, number wrong, and something pithy based on how many they got.
+
+//display button to play again on click, run initializer. 
+
 
 for (let key in triviaGame) {
     if (typeof triviaGame[key] == 'function') {
@@ -224,9 +246,14 @@ $(document).ready(function () {
     //if triviaGame.isThinking = true?
 
 
-    $(".radioBtn").on("click", function () {
-        triviaGame.selectedAnswer = $(this).attr("id");
-    })
+    // $(".radioBtn").on("click", function () {
+    //     console.log(this);
+    //     triviaGame.selectedAnswer = $(this).attr("id");
+    //     console.log(selectedAnswer);
+    // })
+
+    
+        
 
     $("#submitA").on("click", function (event) {
         event.preventDefault();
