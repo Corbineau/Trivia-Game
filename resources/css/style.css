@@ -38,12 +38,23 @@ h1 {
     height: 100%;
 }
 
+.option {
+    padding: 0rem .5rem;
+}
+
 /* structure ids */
 
 #clock {
     font-size: 1.5rem;
+    margin: 1rem;
 }
 
+#submitA {
+    width: 3rem;
+    align-self: center;
+    padding: .75rem;
+    background-color: cadetblue;
+}
 
 /* justifiers */
 .column {

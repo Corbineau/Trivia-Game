@@ -105,6 +105,7 @@ const questions = [
 ]
 
 
+
 function Question({ q, a, b, c, d, answer, rightA, wrongA }) {
     this.q = q;
     this.a = a;
@@ -114,7 +115,7 @@ function Question({ q, a, b, c, d, answer, rightA, wrongA }) {
     this.answer = answer; //this is the letter of the correct answer
     this.rightA = rightA;
     this.wrongA = wrongA;
-}
+};
 questions.forEach(function (question) {
     const triviaQuestion = new Question(question);
     triviaQs.push(triviaQuestion);
@@ -122,145 +123,203 @@ questions.forEach(function (question) {
 
 console.log(triviaQs);
 
-//Question.prototype.run
-
-//game Object
-
-var triviaGame = {
+trivia = {
     gameOn: false,
     isThinking: false,
-    //thinkTimer: setTimeout(this.checkAnswer, 15000),
-    intervalId: "",
     count: 15,
     numRight: 0,
     numWrong: 0,
-    selectedAnswer: "",
-    currentQuestion: "",
-
-    //On load, show entry modal, after 3 seconds, load first question 
-    gameStart: function () {
-
-        this.gameOn = true;
-        console.log(this.gameOn);
-        console.log(this);
-        this.questionLoop();
-
-    },
-    // Iterate through questions 
-
-    questionLoop: async function () {
-
-        //for (let i = 0; i <= triviaQs.length; i++) {
-        const interval = 150000;
-        triviaQs.forEach(function (parent, index) {
-            
-            setTimeout(function loopy() {
-                loopy.bind(triviaGame);
-                console.log(this);
-                this.isThinking = true;
-                this.currentQuestion = triviaQs[index];
-                this.countdown();
-                console.log(this.currentQuestion);
-                $("#question").html(this.currentQuestion.q);
-                $("#aText").html(this.currentQuestion.a);
-                $("#bText").html(this.currentQuestion.b);
-                $("#cText").html(this.currentQuestion.c);
-                $("#dText").html(this.currentQuestion.d);
-                $("#rightAnswer").html(`<img ${this.currentQuestion.rightA} />`);
-                $("#wrongAnswer").html(`<img ${this.currentQuestion.wrongA} />`);
-                while(this.count > 0) {
-                    if($("input[name='possAnswer'").is(":checked")) {
-                        console.log("checked!");
-                        console.log(this);
-                        console.log($(this).attr("id"));
-                        triviaGame.selectedAnswer = $(this).attr("id");
-                        console.log(triviaGame.selectedAnswer);
-                    };
-                }
-                $.when(triviaGame.count === 0).then(triviaGame.checkAnswer());      
-                    
-                }, index * interval);
-        });
-
-        //this.intervalId = setInterval(this.countdown(), 1000);
-        //map each of the parameters in the question object to the page,
-
-        //let {q, a, b, c, d, answer, rightA, wrongA } = this.currentQuestion;
-        //it could be cool to redo this sometime where these are dynamically generated on the page in a random order, by giving them a data-attribute that randomly assigns the letter based on the radio button they're in. 
-
-
-    },
-
     //show countdown clock (15 second timer)
-
-    countdown: function() {
-        this.count--;
-        $("#clock").text(`00:${this.count}`);
-    },
-    checkAnswer: function() {
-        clearInterval(this.intervalId);
-        //if submit is not clicked before the time is up, show time up modal, and automatically move to next question
-        this.isThinking = false;
-        if ((this.selectedAnswer === null) && (this.count === 0)) {
-            $("#timeUp").show;
-            this.count = 15;
-            //if answer is selected and submit is clicked before the time is up, check for correctness, show correct/incorrect modal, and automatically move to the next question. 
-        } else if (currentQuestion.answer === selectedAnswer) {
-            $("#rightAnswer").show;
-        } else if (currentQuestion.answer != selectedAnswer) {
-            $("wrongAnswer").show;
+    countdown: () => {
+        if (this.isThinking === true) {
+            this.count--;
+            $("#clock").text(`00:${this.count}`);
+            if (this.count === 0) {
+                this.stop();
+            }
         }
-        // if answer is not chosen and submit is clicked, nothing happens.
     },
+    intervalId: setInterval(this.countdown, 1000),
+    stop: () => {
 
-    gameInit: function() {
-        this.gameOn = false;
-        this.count = 15;
-        this.numRight = 0;
-        numWrong = 0;
-    
+        clearInterval(this.intervalId);
     },
-    }
-
-
-    
-
-
-
-
-//once all of the questions have gone, display game-end modal, with number of answers right, number wrong, and something pithy based on how many they got.
-
-//display button to play again on click, run initializer. 
-
-
-for (let key in triviaGame) {
-    if (typeof triviaGame[key] == 'function') {
-        triviaGame[key] = triviaGame[key].bind(triviaGame);
-    }
+    //check the answers
+    // checkAnswer: () => {
+    //     clearInterval(this.interval);
+    //     //if submit is not clicked before the time is up, show time up modal, and automatically move to next question
+    //     this.isThinking = false;
+    //     if ((this.selectedAnswer === null) && (this.count === 0)) {
+    //         $("#timeUp").show;
+    //         this.count = 15;
+    //         //if answer is selected and submit is clicked before the time is up, check for correctness, show correct/incorrect modal, and automatically move to the next question. 
+    //     } else if (currentQuestion.answer === selectedAnswer) {
+    //         $("#rightAnswer").show;
+    //     } else if (currentQuestion.answer != selectedAnswer) {
+    //         $("wrongAnswer").show;
+    //     }
+    //     // if answer is not chosen and submit is clicked, nothing happens.
+    // },
 }
 
-$(document).ready(function () {
-
-    setTimeout(triviaGame.gameStart, 3000);
-    //triviaGame.loadTimer();
-    //if triviaGame.isThinking = true?
 
 
-    // $(".radioBtn").on("click", function () {
-    //     console.log(this);
-    //     triviaGame.selectedAnswer = $(this).attr("id");
-    //     console.log(selectedAnswer);
-    // })
 
-    
-        
 
-    $("#submitA").on("click", function (event) {
-        event.preventDefault();
-        triviaGame.checkAnswer();
-    })
 
+
+
+
+var interval = 15000; // how much time should the delay between two iterations be (in milliseconds)?
+
+var gameLoop = () => {
+    return new Promise(function (outerResolve) { //promises, promises
+        var promise = Promise.resolve();
+        var i = 0;
+        var next = () => {
+            var currentQuestion = triviaQs[i];
+            // the actual game activity
+            trivia.count = 15;
+            trivia.isThinking = true;
+            trivia.countdown();
+            $("#question").html(currentQuestion.q);
+            $("#aText").html(currentQuestion.a);
+            $("#bText").html(currentQuestion.b);
+            $("#cText").html(currentQuestion.c);
+            $("#dText").html(currentQuestion.d);
+            $("#rightAnswer").html(`<img ${currentQuestion.rightA} />`);
+            $("#wrongAnswer").html(`<img ${currentQuestion.wrongA} />`);
+            console.log(currentQuestion);
+            //if ()
+            if (++i < triviaQs.length) {
+                promise = promise.then(function () {
+                    return new Promise(function (resolve) {
+                        setTimeout(function () {
+                            resolve();
+                            next();
+                        }, interval);
+                    });
+                });
+            } else {
+                setTimeout(outerResolve, interval);
+                // or just call outerResolve() if you don't want to wait after the last element
+            }
+        };
+        next();
+    });
+};
+
+gameLoop().then(function () {
+    console.log('Loop finished.');
 });
+
+
+
+
+
+
+
+
+
+
+
+//     //On load, show entry modal, after 3 seconds, load first question 
+//     gameStart: function () {
+
+//         this.gameOn = true;
+//         console.log(this.gameOn);
+//         console.log(this);
+//         this.questionLoop();
+
+//     },
+//     // Iterate through questions 
+
+//     questionLoop: async function () {
+
+//         //for (let i = 0; i <= triviaQs.length; i++) {
+
+//         triviaQs.forEach(function (index) {
+//             triviaGame.intervalId = 150000;
+//             setTimeout(function () {
+//                 console.log(index);
+//                 console.log(triviaGame.count);
+//                 triviaGame.isThinking = true;
+//                 triviaGame.currentQuestion = triviaQs[index];
+//                 triviaGame.countdown();
+//                 console.log(triviaGame.currentQuestion);
+//                 $("#question").html(triviaGame.currentQuestion.q);
+//                 $("#aText").html(triviaGame.currentQuestion.a);
+//                 $("#bText").html(triviaGame.currentQuestion.b);
+//                 $("#cText").html(triviaGame.currentQuestion.c);
+//                 $("#dText").html(triviaGame.currentQuestion.d);
+//                 $("#rightAnswer").html(`<img ${triviaGame.currentQuestion.rightA} />`);
+//                 $("#wrongAnswer").html(`<img ${triviaGame.currentQuestion.wrongA} />`);
+    //    storeAnswer = () =>{ while(trivia.count > 0) {
+    //                 if($("input[name='possAnswer'").is(":checked")) {
+    //                     console.log("checked!");
+    //                     console.log(this);
+    //                     console.log($("input[name='possAnswer'").attr("id"));
+    //                     var selectedAnswer = $("input[name='possAnswer'").attr("id");
+    //                     return selectedAnswer;
+    //                 };
+    //             }
+    //         }     
+
+//                 }, index * triviaGame.intervalId);
+//             });
+//     },
+
+//     
+    
+
+//     gameInit: function() {
+//         this.gameOn = false;
+//         this.count = 15;
+//         this.numRight = 0;
+//         numWrong = 0;
+
+//     },
+//     }
+
+
+
+
+
+
+
+// //once all of the questions have gone, display game-end modal, with number of answers right, number wrong, and something pithy based on how many they got.
+
+// //display button to play again on click, run initializer. 
+
+
+// for (let key in triviaGame) {
+//     if (typeof triviaGame[key] == 'function') {
+//         triviaGame[key] = triviaGame[key].bind(triviaGame);
+//     }
+// }
+
+// $(document).ready(function () {
+
+//     setTimeout(triviaGame.gameStart, 3000);
+//     //triviaGame.loadTimer();
+//     //if triviaGame.isThinking = true?
+
+
+//     // $(".radioBtn").on("click", function () {
+//     //     console.log(this);
+//     //     triviaGame.selectedAnswer = $(this).attr("id");
+//     //     console.log(selectedAnswer);
+//     // })
+
+
+
+
+$("#submitA").on("click", function (event) {
+    event.preventDefault();
+    triviaGame.checkAnswer();
+})
+
+
 
 
 
