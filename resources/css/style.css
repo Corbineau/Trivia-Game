@@ -67,7 +67,7 @@ h1 {
     align-self: center;
 }
 
-#submitA {
+button {
     align-self: center;
     padding: .75rem;
     margin: .5rem 0rem;
@@ -97,13 +97,22 @@ h1 {
 
 /* various modals */
 
+
+
 .modal {
     display: none;
+    background-color: whitesmoke;
+    height: 100%;
+    width: 100%;
+    z-index: 5;
 }
 
-#endGame {
-    background-color: whitesmoke;
+#startGame {
+    display: flex;
+    
+    /* position: fixed; */
 }
+
 
 /* bottom of the page */
 

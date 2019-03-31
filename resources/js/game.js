@@ -22,7 +22,7 @@ const questions = [
 
     },
     {
-        q: "The word <i>triviae</i> originally meant _________, which ultimately came to mean 'a public place', and finally, 'commonplace'.",
+        q: "The word 'triviae' originally meant _________, which ultimately came to mean 'a public place', and finally, 'commonplace'.",
         a: "three lives",
         b: "three roads",
         c: "public roads",
@@ -127,13 +127,28 @@ questions.forEach(function (question) {
 console.log(triviaQs);
 
 trivia = {
-gameOn : false,    
-numRight : 0,
-numWrong : 0,
-rightModal: $("#rightAnswer"), 
-wrongModal: $("#wrongAnswer"), 
-endModal: $("#endGame"),
-timeUp: $("#timeUp"),
+    gameOn: false,
+    numRight: 0,
+    numWrong: 0,
+    startModal: $("#startGame"),
+    rightModal: $("#rightAnswer"),
+    wrongModal: $("#wrongAnswer"),
+    endModal: $("#endGame"),
+    timeUp: $("#timeUp"),
+
+    gameStart: () => {
+        this.gameOn = true;
+        this.startModal.hide;
+        gameLoop();
+
+    },
+
+    gameInit: () => {
+        this.gameOn = false;
+        this.numRight = 0;
+        this.numWrong = 0;
+
+    },
 
 }
 
@@ -148,16 +163,16 @@ countdown = () => {
         }
     }
 };
-intervalId = setInterval(countdown, 1000),
+
+const intervalId = setInterval(countdown, 1000),
     stop = () => {
 
         clearInterval(intervalId);
     };
 
 //check the answers
-checkAnswer = (qObj) => {
+let checkAnswer = (qObj) => {
     console.log(qObj);
-    //clearInterval(interval);
     //if submit is not clicked before the time is up, show time up modal, and automatically move to next question
     isThinking = false;
     if ((selectedAnswer === null) && (count === 0)) {
@@ -165,9 +180,11 @@ checkAnswer = (qObj) => {
         //this.count = 15;
         //if answer is selected and submit is clicked before the time is up, check for correctness, show correct/incorrect modal, and automatically move to the next question. 
     } else if (qObj.answer === selectedAnswer) {
-        trivia.rightAnswer.show;
+        trivia.rightModal.show;
+        trivia.numRight++;
     } else if (qObj.answer != selectedAnswer) {
-        $("#wrongAnswer").show;
+        trivia.wrongModal.show;
+        trivia.numWrong++;
     }
 };
 
@@ -183,47 +200,50 @@ checkAnswer = (qObj) => {
 var interval = 15000; // how much time should the delay between two iterations be (in milliseconds)?
 
 var gameLoop = () => {
-    return new Promise(function (outerResolve) { //promises, promises
-        var promise = Promise.resolve();
-        var i = 0;
-        var next = () => {
-            var currentQuestion = triviaQs[i];
-            // the actual game activity
-            count = 15;
-            isThinking = true;
-            countdown();
-            $("#question").html(currentQuestion.q);
-            $("#aText").html(currentQuestion.a);
-            $("#bText").html(currentQuestion.b);
-            $("#cText").html(currentQuestion.c);
-            $("#dText").html(currentQuestion.d);
-            $("#rightAnswer").html(`<img ${currentQuestion.rightA} />`);
-            $("#wrongAnswer").html(`<img ${currentQuestion.wrongA} />`);
-            console.log(currentQuestion);
-            $("#submitA").on("click", (event) => {
-                event.preventDefault();
-                checkAnswer(currentQuestion);
-            })
-            if (++i < triviaQs.length) {
-                promise = promise.then(() => {
-                    return new Promise((resolve) => {
-                        setTimeout(() => {
-                            resolve();
-                            next();
-                        }, interval);
+    if (trivia.gameOn === true) {
+        return new Promise(function (outerResolve) { //promises, promises
+            var promise = Promise.resolve();
+            var i = 0;
+            var next = () => {
+                var currentQuestion = triviaQs[i];
+                // the actual game activity
+                count = 15;
+                isThinking = true;
+                countdown();
+                $("#question").html(currentQuestion.q);
+                $("#aText").html(currentQuestion.a);
+                $("#bText").html(currentQuestion.b);
+                $("#cText").html(currentQuestion.c);
+                $("#dText").html(currentQuestion.d);
+                $("#rightAnswer").html(`<img ${currentQuestion.rightA} />`);
+                $("#wrongAnswer").html(`<img ${currentQuestion.wrongA} />`);
+                console.log(currentQuestion);
+                $("#submitA").on("click", (event) => {
+                    event.preventDefault();
+                    checkAnswer(currentQuestion);
+                })
+                if (++i < triviaQs.length) {
+                    promise = promise.then(() => {
+                        return new Promise((resolve) => {
+                            setTimeout(() => {
+                                resolve();
+                                next();
+                            }, interval);
+                        });
                     });
-                });
-            } else {
-                setTimeout(outerResolve, interval);
-                trivia.endGame.show;
-            }
-        };
-        next();
-    });
-};
+                } else {
+                    setTimeout(outerResolve, interval);
+                }
+            };
+            next();
+        });
+    };
+}
 
-gameLoop().then(function () {
+gameLoop().then(() => {
     console.log('Loop finished.');
+    trivia.endModal.show;
+    trivia.gameOn = false;
 });
 
 
@@ -317,10 +337,16 @@ $(document).ready(function () {
     $(".radioBtn").on("click", function () {
         console.log(this);
         selectedAnswer = $(this).attr("id");
-        console.log(selectedAnswer);
+        //console.log(selectedAnswer);
     })
 
+    $("#startUp").on("click", function () {
+        trivia.gameStart();
+    })
 
+    $("#restart").on("click", function () {
+        trivia.gameStart();
+    })
 
 })
 
