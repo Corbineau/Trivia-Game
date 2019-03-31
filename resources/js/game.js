@@ -104,6 +104,9 @@ const questions = [
     }
 ]
 
+let selectedAnswer = "";
+let isThinking = false;
+let count = 15;
 
 
 function Question({ q, a, b, c, d, answer, rightA, wrongA }) {
@@ -123,44 +126,51 @@ questions.forEach(function (question) {
 
 console.log(triviaQs);
 
-//trivia = {
-    gameOn = false;
-    isThinking = false;
-    count = 15;
-    numRight = 0;
-    numWrong = 0;
-    //show countdown clock (15 second timer)
-    countdown = () => {
-        if (this.isThinking === true) {
-            this.count--;
-            $("#clock").text(`00:${this.count}`);
-            if (this.count === 0) {
-                this.stop();
-            }
+trivia = {
+gameOn : false,    
+numRight : 0,
+numWrong : 0,
+rightModal: $("#rightAnswer"), 
+wrongModal: $("#wrongAnswer"), 
+endModal: $("#endGame"),
+timeUp: $("#timeUp"),
+
+}
+
+
+//show countdown clock (15 second timer)
+countdown = () => {
+    if (isThinking === true) {
+        count--;
+        $("#clock").text(`00:${count}`);
+        if (count === 0) {
+            stop();
         }
-    };
-    intervalId = setInterval(this.countdown, 1000),
+    }
+};
+intervalId = setInterval(countdown, 1000),
     stop = () => {
 
-        clearInterval(this.intervalId);
-  //  },
-    //check the answers
-    // checkAnswer: () => {
-    //     clearInterval(this.interval);
-    //     //if submit is not clicked before the time is up, show time up modal, and automatically move to next question
-    //     this.isThinking = false;
-    //     if ((this.selectedAnswer === null) && (this.count === 0)) {
-    //         $("#timeUp").show;
-    //         this.count = 15;
-    //         //if answer is selected and submit is clicked before the time is up, check for correctness, show correct/incorrect modal, and automatically move to the next question. 
-    //     } else if (currentQuestion.answer === selectedAnswer) {
-    //         $("#rightAnswer").show;
-    //     } else if (currentQuestion.answer != selectedAnswer) {
-    //         $("wrongAnswer").show;
-    //     }
-    //     // if answer is not chosen and submit is clicked, nothing happens.
-    // },
-}
+        clearInterval(intervalId);
+    };
+
+//check the answers
+checkAnswer = (qObj) => {
+    console.log(qObj);
+    //clearInterval(interval);
+    //if submit is not clicked before the time is up, show time up modal, and automatically move to next question
+    isThinking = false;
+    if ((selectedAnswer === null) && (count === 0)) {
+        trivia.timeUp.show;
+        //this.count = 15;
+        //if answer is selected and submit is clicked before the time is up, check for correctness, show correct/incorrect modal, and automatically move to the next question. 
+    } else if (qObj.answer === selectedAnswer) {
+        trivia.rightAnswer.show;
+    } else if (qObj.answer != selectedAnswer) {
+        $("#wrongAnswer").show;
+    }
+};
+
 
 
 
@@ -190,11 +200,14 @@ var gameLoop = () => {
             $("#rightAnswer").html(`<img ${currentQuestion.rightA} />`);
             $("#wrongAnswer").html(`<img ${currentQuestion.wrongA} />`);
             console.log(currentQuestion);
-            //if ()
+            $("#submitA").on("click", (event) => {
+                event.preventDefault();
+                checkAnswer(currentQuestion);
+            })
             if (++i < triviaQs.length) {
-                promise = promise.then(function () {
-                    return new Promise(function (resolve) {
-                        setTimeout(function () {
+                promise = promise.then(() => {
+                    return new Promise((resolve) => {
+                        setTimeout(() => {
                             resolve();
                             next();
                         }, interval);
@@ -202,7 +215,7 @@ var gameLoop = () => {
                 });
             } else {
                 setTimeout(outerResolve, interval);
-                // or just call outerResolve() if you don't want to wait after the last element
+                trivia.endGame.show;
             }
         };
         next();
@@ -254,23 +267,23 @@ gameLoop().then(function () {
 //                 $("#dText").html(triviaGame.currentQuestion.d);
 //                 $("#rightAnswer").html(`<img ${triviaGame.currentQuestion.rightA} />`);
 //                 $("#wrongAnswer").html(`<img ${triviaGame.currentQuestion.wrongA} />`);
-    //    storeAnswer = () =>{ while(trivia.count > 0) {
-    //                 if($("input[name='possAnswer'").is(":checked")) {
-    //                     console.log("checked!");
-    //                     console.log(this);
-    //                     console.log($("input[name='possAnswer'").attr("id"));
-    //                     var selectedAnswer = $("input[name='possAnswer'").attr("id");
-    //                     return selectedAnswer;
-    //                 };
-    //             }
-    //         }     
+//    storeAnswer = () =>{ while(trivia.count > 0) {
+//                 if($("input[name='possAnswer'").is(":checked")) {
+//                     console.log("checked!");
+//                     console.log(this);
+//                     console.log($("input[name='possAnswer'").attr("id"));
+//                     var selectedAnswer = $("input[name='possAnswer'").attr("id");
+//                     return selectedAnswer;
+//                 };
+//             }
+//         }     
 
 //                 }, index * triviaGame.intervalId);
 //             });
 //     },
 
 //     
-    
+
 
 //     gameInit: function() {
 //         this.gameOn = false;
@@ -298,25 +311,17 @@ gameLoop().then(function () {
 //     }
 // }
 
-// $(document).ready(function () {
-
-//     setTimeout(triviaGame.gameStart, 3000);
-//     //triviaGame.loadTimer();
-//     //if triviaGame.isThinking = true?
+$(document).ready(function () {
 
 
-//     // $(".radioBtn").on("click", function () {
-//     //     console.log(this);
-//     //     triviaGame.selectedAnswer = $(this).attr("id");
-//     //     console.log(selectedAnswer);
-//     // })
+    $(".radioBtn").on("click", function () {
+        console.log(this);
+        selectedAnswer = $(this).attr("id");
+        console.log(selectedAnswer);
+    })
 
 
 
-
-$("#submitA").on("click", function (event) {
-    event.preventDefault();
-    triviaGame.checkAnswer();
 })
 
 

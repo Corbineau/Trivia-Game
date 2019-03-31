@@ -8,8 +8,8 @@
     <link href="https://fonts.googleapis.com/css?family=Chicle|Nanum+Gothic+Coding:400,700" rel="stylesheet">
 </head>
 
-<body class="column"> 
-    <header class="center">
+<body class="column">
+    <header class="center row">
         <h1>Meta Trivia</h1>
     </header>
     <div class="wrapper center column">
@@ -17,16 +17,20 @@
 
         </div>
         <div id="clock">00:00</div>
-        <div id="playField">
+        <div id="playField" class="column center">
             <p class="questions" id="question">
 
             </p>
             <div class="answers" id="answer">
                 <form class="answer column" id="unanswered">
-                    <p class="aBox row"> <input type="radio" name="possAnswer" class="radioBtn" id="a" /> <span class="option" id="aText"></span></p>
-                    <p class="aBox row"> <input type="radio" name="possAnswer" class="radioBtn" id="b" /> <span class="option" id="bText"></span></p>
-                    <p class="aBox row"> <input type="radio" name="possAnswer" class="radioBtn" id="c" /> <span class="option" id="cText"></span></p>
-                    <p class="aBox row"> <input type="radio" name="possAnswer" class="radioBtn" id="d" /> <span class="option" id="dText"></span></p>
+                    <p class="aBox row"> <input type="radio" name="possAnswer" class="radioBtn" id="a" /> <span
+                            class="option" id="aText"></span></p>
+                    <p class="aBox row"> <input type="radio" name="possAnswer" class="radioBtn" id="b" /> <span
+                            class="option" id="bText"></span></p>
+                    <p class="aBox row"> <input type="radio" name="possAnswer" class="radioBtn" id="c" /> <span
+                            class="option" id="cText"></span></p>
+                    <p class="aBox row"> <input type="radio" name="possAnswer" class="radioBtn" id="d" /> <span
+                            class="option" id="dText"></span></p>
                     <button type="submit" id="submitA">Submit</button>
                 </form>
                 <p class="modal answer" id="rightAnswer">
@@ -36,12 +40,17 @@
 
                 </p>
             </div>
-        </div>
-        <p class="modal endGame" id="youWin"></p>
-        <p class="modal endGame" id="youLose"></p>
-    </div>
-    <footer>
 
+        </div>
+        <p class="modal" id="endGame">
+            Game Over! <br />
+            You got <span id="numRight"> </span> right.
+            You got <span id="numWrong"> </span> wrong.
+        </p>
+
+    </div>
+    <footer class="row center">
+        <p>copyright 2019</p>
     </footer>
     <!-- jQuery -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
