@@ -123,14 +123,14 @@ questions.forEach(function (question) {
 
 console.log(triviaQs);
 
-trivia = {
-    gameOn: false,
-    isThinking: false,
-    count: 15,
-    numRight: 0,
-    numWrong: 0,
+//trivia = {
+    gameOn = false;
+    isThinking = false;
+    count = 15;
+    numRight = 0;
+    numWrong = 0;
     //show countdown clock (15 second timer)
-    countdown: () => {
+    countdown = () => {
         if (this.isThinking === true) {
             this.count--;
             $("#clock").text(`00:${this.count}`);
@@ -138,12 +138,12 @@ trivia = {
                 this.stop();
             }
         }
-    },
-    intervalId: setInterval(this.countdown, 1000),
-    stop: () => {
+    };
+    intervalId = setInterval(this.countdown, 1000),
+    stop = () => {
 
         clearInterval(this.intervalId);
-    },
+  //  },
     //check the answers
     // checkAnswer: () => {
     //     clearInterval(this.interval);
@@ -179,9 +179,9 @@ var gameLoop = () => {
         var next = () => {
             var currentQuestion = triviaQs[i];
             // the actual game activity
-            trivia.count = 15;
-            trivia.isThinking = true;
-            trivia.countdown();
+            count = 15;
+            isThinking = true;
+            countdown();
             $("#question").html(currentQuestion.q);
             $("#aText").html(currentQuestion.a);
             $("#bText").html(currentQuestion.b);
