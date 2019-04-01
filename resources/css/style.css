@@ -102,17 +102,21 @@ button {
 .modal {
     display: none;
     background-color: whitesmoke;
-    height: 100%;
-    width: 100%;
+    position: absolute; 
+    top: inherit;
+    height: 300px;
     z-index: 5;
+    /* border: 1px solid black; */
 }
 
 #startGame {
     display: flex;
-    
-    /* position: fixed; */
+    justify-content: center;
 }
 
+#endGame, #rightAnswer, #wrongAnswer, #timeUp {
+    justify-content: center;
+}
 
 /* bottom of the page */
 
