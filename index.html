@@ -33,17 +33,6 @@
                             class="option" id="dText"></span></p>
                     <button type="submit" id="submitA">Submit</button>
                 </form>
-                <p class="modal answer" id="rightAnswer">
-                    
-
-                </p>
-                <p class="modal answer" id="wrongAnswer">
-                    
-
-                </p>
-                <p class="modal answer" id="timeUp">
-
-                </p>
             </div>
 
         </div>
@@ -51,13 +40,26 @@
                 Are you ready to play? <br />
                 <button id="startUp">Start</button>
         </p>
+        <p class="modal column" id="rightAnswer">
+                
+
+        </p>
+        <p class="modal column" id="wrongAnswer">
+            
+
+        </p>
+        <p class="modal column" id="timeUp">
+            Time is up! The correct answer was:
+                <p id="rightLetter"> </p>
+                <!-- <p></p> -->
+        </p>
         <p class="modal column" id="endGame">
             Game Over! <br />
             You got <span id="numRight"> </span> right.<br />
             You got <span id="numWrong"> </span> wrong.<br />
             <br />
             Would you like to play again?
-            <button id="restart"></button>
+            <button id="restart">Play Again</button>
 
         </p>
 

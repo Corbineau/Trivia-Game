@@ -1,14 +1,14 @@
 let triviaQs = [];
 const questions = [
     {
-        q: "In Latin eduction, The <i>Trivia<i> are the three foundational liberal arts:",
+        q: "In Latin eduction, The 'Trivia' are the three foundational liberal arts:",
         a: "reading, writing, and arithmetic",
         b: "history, literature, and philosophy",
         c: "grammar, logic, and rhetoric",
         d: "blood, love, and rhetoric",
         answer: "c",
-        rightA: "src='resources/images/correct.jpg",
-        wrongA: "src'resources/images/incorrect.jpg'"
+        fact: "In addition to the 'Trivia' of Grammar, Logic, and Rhetoric are the Quadrivium ",
+        
     },
     {
         q: "The board game <i>Trivial Pursuit</i> was first released in:",
@@ -17,8 +17,8 @@ const questions = [
         c: "1979",
         d: "1984",
         answer: "a",
-        rightA: "src='resources/images/correct.jpg",
-        wrongA: "src='resources/images/incorrect.jpg'"
+        fact: "src='resources/images/correct.jpg",
+        
 
     },
     {
@@ -28,8 +28,8 @@ const questions = [
         c: "public roads",
         d: "water of life",
         answer: "b",
-        rightA: "src='resources/images/correct.jpg",
-        wrongA: "src'resources/images/incorrect.jpg'"
+        fact: "src='resources/images/correct.jpg",
+        
     },
     {
         q: "The word 'trivia' came to mean 'trite, unimportant, commonplace, banal' in the ____, largely due to the works of ________",
@@ -38,8 +38,8 @@ const questions = [
         c: "1600's, Shakespere",
         d: "1700's, Jonathan Swift",
         answer: "c",
-        rightA: "src='resources/images/correct.jpg",
-        wrongA: "src'resources/images/incorrect.jpg'"
+        fact: "src='resources/images/correct.jpg",
+        
     },
     {
         q: "Fred L Worth, author of the Trivia Encyclopedia, deliberately placed misinformation in his books to catch anyone who attempted to violate his copyright. One of these incorrect answers was used in the original Trivial Pursuit board game, 'what was Columbo's first name?' The wrong answer was ______; Columbo's first name was actually _______",
@@ -48,8 +48,8 @@ const questions = [
         c: "Frances, Lieutenant",
         d: "Philip, Frank (never actually stated)",
         answer: "d",
-        rightA: "src='resources/images/correct.jpg",
-        wrongA: "src'resources/images/incorrect.jpg'"
+        fact: "src='resources/images/correct.jpg",
+        
     },
     {
         q: "Fred L Worth sued <i>Trivial Pursuit</i> for 300 Million dollars for copyright infringment. Trivial Pursuit successfully defeated the suit, arguing that:",
@@ -58,8 +58,8 @@ const questions = [
         c: "The Copyright Trap is an invalid tactic, like entrapment.",
         d: "A Board Game is protected under Fair Use laws.",
         answer: "b",
-        rightA: "src='resources/images/correct.jpg",
-        wrongA: "src'resources/images/incorrect.jpg'"
+        fact: "src='resources/images/correct.jpg",
+        
     },
     {
         q: "A contemporary slang synonym for trivial is:",
@@ -68,8 +68,8 @@ const questions = [
         c: "banjie",
         d: "triflin'",
         answer: "d",
-        rightA: "src='resources/images/correct.jpg",
-        wrongA: "src'resources/images/incorrect.jpg'"
+        fact: "src='resources/images/correct.jpg",
+        
     },
     {
         q: "The first known labeling of trivia as a casual parlor game was in a February 5th, 1965 column published in which newspaper?",
@@ -78,8 +78,8 @@ const questions = [
         c: "The New York Times",
         d: "The Portland Press Herald",
         Answer: "a",
-        rightA: "src='resources/images/correct.jpg",
-        wrongA: "src'resources/images/incorrect.jpg'"
+        fact: "src='resources/images/correct.jpg",
+        
     },
     {
         q: "The two longest ongoing trivia contests in the world are the Great Midwest Trivia Contest at Lawrence University and the Williams Trivia Contest, both of which started in the spring of which year?",
@@ -88,8 +88,8 @@ const questions = [
         c: "1979",
         d: "1966",
         answer: "d",
-        rightA: "src='resources/images/correct.jpg",
-        wrongA: "src'resources/images/incorrect.jpg'"
+        fact: "src='resources/images/correct.jpg",
+        
     },
     {
         q: "Which televised trivia competition was the framing device for a popular 2008 movie set in Mumbai, India?",
@@ -98,8 +98,8 @@ const questions = [
         c: "The $100,000 Pyramid",
         d: "Bollywood Squares",
         Answer: "b",
-        rightA: "src='resources/images/correct.jpg'",
-        wrongA: "src='resources/images/incorrect.jpg'"
+        fact: "src='resources/images/correct.jpg'",
+        
 
     }
 ]
@@ -107,17 +107,17 @@ const questions = [
 let selectedAnswer = "";
 let isThinking = false;
 let count = 15;
+const interval = 15000; // how much time should the delay between two iterations be (in milliseconds)?
 
 
-function Question({ q, a, b, c, d, answer, rightA, wrongA }) {
+function Question({ q, a, b, c, d, answer, fact }) {
     this.q = q;
     this.a = a;
     this.b = b;
     this.c = c;
     this.d = d;
     this.answer = answer; //this is the letter of the correct answer
-    this.rightA = rightA;
-    this.wrongA = wrongA;
+    this.fact = fact;
 };
 questions.forEach(function (question) {
     const triviaQuestion = new Question(question);
@@ -186,23 +186,17 @@ let checkAnswer = (qObj) => {
     } else if (qObj.answer === selectedAnswer) {
         trivia.rightModal.css("display", "flex");
         trivia.numRight++;
+        console.log(`Correct: ${trivia.numRight}`);
     } else if (qObj.answer != selectedAnswer) {
         trivia.wrongModal.css("display", "flex");;
         trivia.numWrong++;
+        console.log(`Wrong: ${trivia.numWrong}`);
     }
-    gameLoop.next();
+    // gameLoop.next();
 };
 
 
 
-
-
-
-
-
-
-
-var interval = 15000; // how much time should the delay between two iterations be (in milliseconds)?
 
 var gameLoop = () => {
     if (trivia.gameOn === true) {
@@ -210,6 +204,7 @@ var gameLoop = () => {
             var promise = Promise.resolve();
             var i = 0;
             var next = () => {
+                $(".modal").hide();
                 var currentQuestion = triviaQs[i];
                 // the actual game activity
                 $(".radioBtn").prop("checked", false);
@@ -221,8 +216,8 @@ var gameLoop = () => {
                 $("#bText").html(currentQuestion.b);
                 $("#cText").html(currentQuestion.c);
                 $("#dText").html(currentQuestion.d);
-                $("#rightAnswer").html(`<img ${currentQuestion.rightA} />`);
-                $("#wrongAnswer").html(`<img ${currentQuestion.wrongA} />`);
+                $("#rightAnswer").html(`Correct!<br/> ${currentQuestion.fact} />`);
+                $("#wrongAnswer").html(`Wrong!<br /> The correct answer is <strong>${currentQuestion.answer}</strong><br /> ${currentQuestion.fact} />`);
                 console.log(currentQuestion);
                 $("#submitA").on("click", (event) => {
                     event.preventDefault();

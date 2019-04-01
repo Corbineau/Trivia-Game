@@ -103,8 +103,10 @@ button {
     display: none;
     background-color: whitesmoke;
     position: absolute; 
+    align-items: center;
     top: inherit;
     height: 300px;
+    width: inherit;
     z-index: 5;
     /* border: 1px solid black; */
 }
@@ -112,6 +114,7 @@ button {
 #startGame {
     display: flex;
     justify-content: center;
+    z-index: 10;
 }
 
 #endGame, #rightAnswer, #wrongAnswer, #timeUp {
