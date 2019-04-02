@@ -7,17 +7,17 @@ const questions = [
         c: "grammar, logic, and rhetoric",
         d: "blood, love, and rhetoric",
         answer: "c",
-        fact: "In addition to the 'Trivia' of Grammar, Logic, and Rhetoric are the Quadrivium ",
+        fact: "In addition to the 'Trivia' of Grammar, Logic, and Rhetoric are the 'Quadrivia' Arithmetic, Geometry, Music, and Astronomy. Eat your heart out, Common Core.",
         
     },
     {
         q: "The board game <i>Trivial Pursuit</i> was first released in:",
-        a: "1982",
+        a: "1981",
         b: "1973",
         c: "1979",
         d: "1984",
         answer: "a",
-        fact: "src='resources/images/correct.jpg",
+        fact: "1981 is the correct answer for when the game was released. However, Trivial Pursuit was initially created in 1979 by two friends who decided to make up their game when they saw that pieces of their scrabble game missing. So they made a game with even more pieces to lose.",
         
 
     },
@@ -28,7 +28,7 @@ const questions = [
         c: "public roads",
         d: "water of life",
         answer: "b",
-        fact: "src='resources/images/correct.jpg",
+        fact: "The ancient Romans used this word to describe a place where one road split, or forked into two roads- that is, where three roads met. Don't tell Robert Frost.",
         
     },
     {
@@ -38,7 +38,7 @@ const questions = [
         c: "1600's, Shakespere",
         d: "1700's, Jonathan Swift",
         answer: "c",
-        fact: "src='resources/images/correct.jpg",
+        fact: "Of course it was Shakespere! I mean, he made up or repurposed half of the english language.",
         
     },
     {
@@ -46,9 +46,9 @@ const questions = [
         a: "George, Columbo",
         b: "Frank, nonexistant",
         c: "Frances, Lieutenant",
-        d: "Philip, Frank (never actually stated)",
+        d: "Philip, Frank",
         answer: "d",
-        fact: "src='resources/images/correct.jpg",
+        fact: "Fred L. Worth listed Colombo's first name as Philip as a copyright trap. Although Colombo's first name is never actually spoken in the show, there are several places where it is written, in particular, on his police ID.",
         
     },
     {
@@ -58,17 +58,17 @@ const questions = [
         c: "The Copyright Trap is an invalid tactic, like entrapment.",
         d: "A Board Game is protected under Fair Use laws.",
         answer: "b",
-        fact: "src='resources/images/correct.jpg",
+        fact: "Facts are Facts, and you can't claim ownership of them! Which doesn't mean you should make up your own for money. Looking at you, Fox News.",
         
     },
     {
-        q: "A contemporary slang synonym for trivial is:",
-        a: "bougie",
-        b: "ridic",
-        c: "banjie",
-        d: "triflin'",
+        q: "The how much was largest prize pot for the trivia-game app, HQTrivia?",
+        a: "175,237",
+        b: "15,000",
+        c: "500,000",
+        d: "250,000",
         answer: "d",
-        fact: "src='resources/images/correct.jpg",
+        fact: "A dozen people split the $250,000 pot, amounting to $20,833.33 each. Which, after taxes, will just about cover code camp tuition!",
         
     },
     {
@@ -78,7 +78,7 @@ const questions = [
         c: "The New York Times",
         d: "The Portland Press Herald",
         Answer: "a",
-        fact: "src='resources/images/correct.jpg",
+        fact: "The Columbia Daily Spectator is also the longest continuously operating college newspaper, and is still more respected than Fox News.",
         
     },
     {
@@ -88,7 +88,7 @@ const questions = [
         c: "1979",
         d: "1966",
         answer: "d",
-        fact: "src='resources/images/correct.jpg",
+        fact: "1982 also saw the launch of the Commodore 64- and the first known computer virus, the Elk Cloner. So y'know, a good year.",
         
     },
     {
@@ -98,7 +98,7 @@ const questions = [
         c: "The $100,000 Pyramid",
         d: "Bollywood Squares",
         Answer: "b",
-        fact: "src='resources/images/correct.jpg'",
+        fact: "Funfact: 'b' is also the letter of the fake answer that the host, Prem, gives to the protagonist, Jamal to test whether he is cheating.",
         
 
     }
