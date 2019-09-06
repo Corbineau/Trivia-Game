@@ -121,6 +121,11 @@ button {
     justify-content: center;
 }
 
+#rightLetter {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
 /* bottom of the page */
 
 footer {
