@@ -189,11 +189,12 @@ trivia = {
         //     this.timeUp.css("display", "flex");
         //     //if answer is selected and submit is clicked before the time is up, check for correctness, show correct/incorrect modal, and automatically move to the next question. 
         // } else if 
+        //TODO: there is something super wrong in this checker-- it only works the first time, ant then shows the wrong modal even if the answers are correct. Wtf.
         if (qObj.answer === selectedAnswer) {
             this.rightModal.css("display", "flex");
             this.numRight++;
             console.log(`Correct: ${this.numRight}`);
-        } else if (qObj.answer !== selectedAnswer) {
+        } else {
             this.wrongModal.css("display", "flex");;
             this.numWrong++;
             console.log(`Wrong: ${this.numWrong}`);
