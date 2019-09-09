@@ -104,8 +104,7 @@ const questions = [
     }
 ]
 
-let selectedAnswer = "";
-let isThinking = false;
+
 let count = 15;
 const interval = 15000; // how much time should the delay between two iterations be (in milliseconds)?
 
@@ -128,6 +127,7 @@ console.log(triviaQs);
 
 trivia = {
     gameOn: false,
+    isThinking: false,
     numRight: 0,
     numWrong: 0,
     startModal: $("#startGame"),
@@ -135,19 +135,25 @@ trivia = {
     wrongModal: $("#wrongAnswer"),
     endModal: $("#endGame"),
     timeUp: $("#timeUp"),
+    qNum: 0,
+    selectedAnswer: "",
+    rightAnswer: "",
+
 
     gameLoop: function () {
         if (this.gameOn === true) {
             return new Promise(outerResolve => { //promises, promises
                 let promise = Promise.resolve();
-                let i = 0;
+                // let i = 0;
                 let next = () => {
                     $(".modal").hide();
-                    let currentQuestion = triviaQs[i];
+                    let currentQuestion = triviaQs[this.qNum];
+                    console.log(currentQuestion);
+                    this.rightAnswer = currentQuestion.answer;
                     // the actual game activity
                     $(".radioBtn").prop("checked", false);
                     count = 15;
-                    isThinking = true;
+                    this.isThinking = true;
                     countdown();
                     $("#question").html(currentQuestion.q);
                     $("#aText").html(currentQuestion.a);
@@ -157,15 +163,11 @@ trivia = {
                     $("#rightAnswer").html(`Correct!<br/> ${currentQuestion.fact}`);
                     $("#wrongAnswer").html(`Wrong!<br /> The correct answer is <strong>${currentQuestion.answer}</strong><br /> ${currentQuestion.fact}`);
                     // console.log(currentQuestion);
-                    $("#submitA").on("click", (event) => {
-                        event.preventDefault();
-                        this.checkAnswer(currentQuestion);
-                        
-                    })
-                    if (++i < triviaQs.length) {
+                    if (this.qNum < triviaQs.length) {
                         promise = promise.then(() => {
                             return new Promise((resolve) => {
                                 setTimeout(() => {
+                                    console.log(this.qNum);
                                     resolve();
                                     next();
                                 }, interval);
@@ -180,37 +182,25 @@ trivia = {
         };
     },
 
-    checkAnswer: function (qObj) {
-        console.log(qObj);
-        console.log(selectedAnswer);
+    checkAnswer: function () {
+        console.log(`I'm checking an answer - ${this.rightAnswer} vs ${this.selectedAnswer}`);
         //if submit is not clicked before the time is up, show time up modal, and automatically move to next question
-        isThinking = false;
-        // if ((selectedAnswer === null) && (count === 0)) {
-        //     this.timeUp.css("display", "flex");
-        //     //if answer is selected and submit is clicked before the time is up, check for correctness, show correct/incorrect modal, and automatically move to the next question. 
-        // } else if 
-        if (qObj.answer === selectedAnswer) {
+        this.isThinking = false;
+        if ((this.selectedAnswer === null) && (count === 0)) {
+            this.timeUp.css("display", "flex");
+            //if answer is selected and submit is clicked before the time is up, check for correctness, show correct/incorrect modal, and automatically move to the next question. 
+        } else if (this.rightAnswer === this.selectedAnswer) {
+
             this.rightModal.css("display", "flex");
-            this.numRight++;
+            ++this.numRight;
             console.log(`Correct: ${this.numRight}`);
-        } else if (qObj.answer !== selectedAnswer) {
-            this.wrongModal.css("display", "flex");;
-            this.numWrong++;
+        } else {
+            this.wrongModal.css("display", "flex");
+
+            ++this.numWrong;
             console.log(`Wrong: ${this.numWrong}`);
         }
-        // gameLoop.next();
-    },
-
-    gameStart: function () {
-        // console.log(this);
-        this.gameOn = true;
-        $(this.startModal).hide();
-        this.gameLoop().then(() => {
-            console.log('Loop finished.');
-            $(this.endModal).css("display", "flex");
-            this.gameInit();
-        });
-
+        this.qNum++
     },
 
     gameInit: () => {
@@ -220,12 +210,27 @@ trivia = {
 
     },
 
+    gameStart: function () {
+        // console.log(this);
+        this.gameOn = true;
+        $(this.startModal).hide();
+        this.gameLoop().then(() => {
+            console.log('Loop finished.');
+            $("#numRight").html(this.numRight);
+            $("#numWrong").html(this.numWrong);
+            $(this.endModal).css("display", "flex");
+        });
+
+    },
+
+   
+
 }
 
 
 //show countdown clock (15 second timer)
 countdown = () => {
-    if (isThinking === true) {
+    if (trivia.isThinking === true) {
         count--;
         $("#clock").text(`00:${count}`);
         if (count === 0) {
@@ -236,47 +241,35 @@ countdown = () => {
 
 const intervalId = setInterval(countdown, 1000),
     stop = () => {
-
         clearInterval(intervalId);
     };
-
-
-
-
-
-
-
-
-
-
 
 
 // //display button to play again on click, run initializer. 
 
 
-// for (let key in trivia) {
-//     if (typeof trivia[key] == 'function') {
-//         trivia[key] = trivia[key].bind(trivia);
-//     }
-// }
-
-$(document).ready(function () {
 
 
     $(".radioBtn").on("click", function () {
         // console.log(this);
-        selectedAnswer = $(this).attr("id");
-        console.log(selectedAnswer);
+        trivia.selectedAnswer = $(this).attr("id");
+        console.log(trivia.selectedAnswer);
     })
 
     $("#startUp").on("click", function () {
-        console.log("clicky!");
+        // console.log("clicky!");
         trivia.gameStart();
         
     })
 
     $("#restart").on("click", function () {
+        trivia.gameInit();
         trivia.gameStart();
     })
 
-})
+    $("#submitA").on("click", (event) => {
+        event.preventDefault();
+        trivia.checkAnswer();
+        
+        
+    });

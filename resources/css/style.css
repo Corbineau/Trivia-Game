@@ -37,6 +37,7 @@ h1 {
     padding: 1.5rem;
     background-color: whitesmoke;
     border: 2px solid tomato;
+    overflow: hidden;
 }
 
 .aBox {
@@ -102,10 +103,10 @@ button {
 .modal {
     display: none;
     background-color: whitesmoke;
-    position: absolute; 
+    position: absolute;
     align-items: center;
     top: inherit;
-    height: 300px;
+    height: 59%;
     width: inherit;
     z-index: 5;
     /* border: 1px solid black; */
