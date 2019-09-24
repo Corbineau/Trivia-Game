@@ -105,7 +105,7 @@ button {
     background-color: whitesmoke;
     position: absolute;
     align-items: center;
-    top: inherit;
+    top: fixed;
     height: 59%;
     width: inherit;
     z-index: 5;

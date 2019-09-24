@@ -146,26 +146,27 @@ trivia = {
                 let promise = Promise.resolve();
                 // let i = 0;
                 let next = () => {
+                    console.log("round we go again!");
                     $(".modal").hide();
-                    let currentQuestion = triviaQs[this.qNum];
-                    console.log(currentQuestion);
-                    this.rightAnswer = currentQuestion.answer;
-                    // the actual game activity
-                    $(".radioBtn").prop("checked", false);
-                    count = 15;
-                    this.isThinking = true;
-                    countdown();
-                    $("#question").html(currentQuestion.q);
-                    $("#aText").html(currentQuestion.a);
-                    $("#bText").html(currentQuestion.b);
-                    $("#cText").html(currentQuestion.c);
-                    $("#dText").html(currentQuestion.d);
-                    $("#rightAnswer").html(`Correct!<br/> ${currentQuestion.fact}`);
-                    $("#wrongAnswer").html(`Wrong!<br /> The correct answer is <strong>${currentQuestion.answer}</strong><br /> ${currentQuestion.fact}`);
-                    // console.log(currentQuestion);
                     if (this.qNum < triviaQs.length) {
+                        let currentQuestion = triviaQs[this.qNum];
+                        console.log(currentQuestion);
+                        this.rightAnswer = currentQuestion.answer;
+                        // the actual game activity
+                        $(".radioBtn").prop("checked", false);
+                        count = 15;
+                        this.isThinking = true;
+                        console.log(`I'm thinking... count is ${count}`);
+                        countdown();
+                        $("#question").html(currentQuestion.q);
+                        $("#aText").html(currentQuestion.a);
+                        $("#bText").html(currentQuestion.b);
+                        $("#cText").html(currentQuestion.c);
+                        $("#dText").html(currentQuestion.d);
+                        $("#rightAnswer").html(`Correct!<p></p> ${currentQuestion.fact}`);
+                        $("#wrongAnswer").html(`Wrong!<p></p> The correct answer is <strong>${currentQuestion.answer}</strong><br /> ${currentQuestion.fact}`);    
                         promise = promise.then(() => {
-                            return new Promise((resolve) => {
+                            return new Promise(resolve => {
                                 setTimeout(() => {
                                     console.log(this.qNum);
                                     resolve();
@@ -174,6 +175,7 @@ trivia = {
                             });
                         });
                     } else {
+                        console.log("what's next?");
                         setTimeout(outerResolve, interval);
                     }
                 };
@@ -185,34 +187,19 @@ trivia = {
     checkAnswer: function () {
         console.log(`I'm checking an answer - ${this.rightAnswer} vs ${this.selectedAnswer}`);
         //if submit is not clicked before the time is up, show time up modal, and automatically move to next question
-<<<<<<< HEAD
-        isThinking = false;
-        // if ((selectedAnswer === null) && (count === 0)) {
-        //     this.timeUp.css("display", "flex");
-        //     //if answer is selected and submit is clicked before the time is up, check for correctness, show correct/incorrect modal, and automatically move to the next question. 
-        // } else if 
-        //TODO: there is something super wrong in this checker-- it only works the first time, ant then shows the wrong modal even if the answers are correct. Wtf.
-        if (qObj.answer === selectedAnswer) {
-=======
         this.isThinking = false;
         if ((this.selectedAnswer === null) && (count === 0)) {
             this.timeUp.css("display", "flex");
             //if answer is selected and submit is clicked before the time is up, check for correctness, show correct/incorrect modal, and automatically move to the next question. 
         } else if (this.rightAnswer === this.selectedAnswer) {
 
->>>>>>> 1efa9c3d518cc3c03a6a14572113c0ace651f2b7
             this.rightModal.css("display", "flex");
             ++this.numRight;
             console.log(`Correct: ${this.numRight}`);
         } else {
-<<<<<<< HEAD
-            this.wrongModal.css("display", "flex");;
-            this.numWrong++;
-=======
             this.wrongModal.css("display", "flex");
 
             ++this.numWrong;
->>>>>>> 1efa9c3d518cc3c03a6a14572113c0ace651f2b7
             console.log(`Wrong: ${this.numWrong}`);
         }
         this.qNum++
@@ -245,11 +232,13 @@ trivia = {
 
 //show countdown clock (15 second timer)
 countdown = () => {
+    console.log(`Am I thinking?: ${trivia.isThinking}`);
     if (trivia.isThinking === true) {
         count--;
-        $("#clock").text(`00:${count}`);
+        $("#clock").text(`00:0${count}`);
         if (count === 0) {
             stop();
+            trivia.checkAnswer();
         }
     }
 };
