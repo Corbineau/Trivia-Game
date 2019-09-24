@@ -87,7 +87,7 @@ const questions = [
         b: "1982",
         c: "1979",
         d: "1966",
-        answer: "d",
+        answer: "b",
         fact: "1982 also saw the launch of the Commodore 64- and the first known computer virus, the Elk Cloner. So y'know, a good year.",
         
     },
@@ -106,6 +106,7 @@ const questions = [
 
 
 let count = 15;
+let t;
 const interval = 15000; // how much time should the delay between two iterations be (in milliseconds)?
 
 
@@ -157,7 +158,8 @@ trivia = {
                         count = 15;
                         this.isThinking = true;
                         console.log(`I'm thinking... count is ${count}`);
-                        countdown();
+                        // timer();
+                        // countdown();
                         $("#question").html(currentQuestion.q);
                         $("#aText").html(currentQuestion.a);
                         $("#bText").html(currentQuestion.b);
@@ -241,15 +243,16 @@ countdown = () => {
             trivia.checkAnswer();
         }
     }
+    timer();
 };
 
-const intervalId = setInterval(countdown, 1000),
-    stop = () => {
-        clearInterval(intervalId);
-    };
+const timer = () => {
+    t = setTimeout(countdown, 1000);
+}
 
-
-// //display button to play again on click, run initializer. 
+const stop = () => {
+    clearTimeout(t);
+};
 
 
 
@@ -263,6 +266,7 @@ const intervalId = setInterval(countdown, 1000),
     $("#startUp").on("click", function () {
         // console.log("clicky!");
         trivia.gameStart();
+        timer();
         
     })
 
