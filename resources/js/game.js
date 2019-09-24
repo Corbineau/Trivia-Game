@@ -77,7 +77,7 @@ const questions = [
         b: "The Sacramento News and Review",
         c: "The New York Times",
         d: "The Portland Press Herald",
-        Answer: "a",
+        answer: "a",
         fact: "The Columbia Daily Spectator is also the longest continuously operating college newspaper, and is still more respected than Fox News.",
         
     },
@@ -97,7 +97,7 @@ const questions = [
         b: "Who Wants To Be a Millionaire?",
         c: "The $100,000 Pyramid",
         d: "Bollywood Squares",
-        Answer: "b",
+        answer: "b",
         fact: "Funfact: 'b' is also the letter of the fake answer that the host, Prem, gives to the protagonist, Jamal to test whether he is cheating.",
         
 

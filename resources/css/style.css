@@ -105,8 +105,8 @@ button {
     background-color: whitesmoke;
     position: absolute;
     align-items: center;
-    top: fixed;
-    height: 59%;
+    top: auto;
+    height: 50%;
     width: inherit;
     z-index: 5;
     /* border: 1px solid black; */
